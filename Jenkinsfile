@@ -16,7 +16,9 @@ pipeline {
 
         stage('Run Tests') {
             steps {
+		echo 'Running Jest tests...'
                 sh 'npm test' // Exécute les tests et génère reports/junit.xml
+		sh 'chmod 777 test-results.xml'
             }
         }
 
