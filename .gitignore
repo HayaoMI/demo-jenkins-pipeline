@@ -1,0 +1,5 @@
+# Dépendances Node.js
+node_modules/
+
+# Logs et résultats de build Jenkins
+/reports

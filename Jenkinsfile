@@ -1,0 +1,42 @@
+pipeline {
+    agent {
+        // Utilisation d'une image Docker Node.js pour un environnement cohérent
+        docker {
+            image 'node:lts-slim'
+            args '-u root'
+        }
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install' // Installe Jest et les dépendances
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh 'npm test' // Exécute les tests et génère reports/junit.xml
+            }
+        }
+
+        stage('Publish Results') {
+            steps {
+                // Publie le rapport JUnit pour l'interface Jenkins
+                junit 'reports/junit.xml'
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs() // Nettoie l'espace de travail après le Job
+        }
+        success {
+            echo '✅ Pipeline succeeded! CI done.'
+        }
+        failure {
+            echo '❌ Pipeline failed! Review tests and code.'
+        }
+    }
+}
