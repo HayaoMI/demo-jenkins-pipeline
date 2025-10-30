@@ -22,8 +22,8 @@ pipeline {
 
         stage('Publish Results') {
             steps {
-                // Publie le rapport JUnit pour l'interface Jenkins
-                junit 'reports/junit.xml'
+                echo 'Publishing JUnit test results...'
+                junit 'test-results.xml'
             }
         }
     }
